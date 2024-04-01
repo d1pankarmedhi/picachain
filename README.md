@@ -27,7 +27,7 @@ import matplotlib.pyplot as plt
 from picachain.datastore import ChromaStore
 from picachain.embedding import ClipEmbedding
 from picachain.retriever import ImageRetriever
-from picachain.search.image_search import ImageSearch
+from picachain.search import ImageSearch
 ```
 
 ```python
