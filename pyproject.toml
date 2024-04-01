@@ -1,11 +1,23 @@
 [tool.poetry]
 authors = ["d1pankarmedhi <dipankarmedhi11@gmail.com>"]
 description = "Simple image search engine package."
+homepage = "https://github.com/d1pankarmedhi/picachain"
+keywords = [
+  "python",
+  "search-engine",
+  "chromadb",
+  "image",
+  "search",
+  "packages",
+  "poetry",
+  "python-packages",
+]
 license = "MIT"
 name = "picachain"
 packages = [{include = "picachain"}]
 readme = "README.md"
-version = "0.1.2"
+repository = "https://github.com/d1pankarmedhi/picachain"
+version = "0.1.20"
 
 [tool.poetry.dependencies]
 chromadb = "^0.4.24"

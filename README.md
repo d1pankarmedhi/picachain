@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/d1pankarmedhi/picachain/assets/136924835/52945ba9-8b89-40a2-bd8e-faef1d9862c0" height=150></img>
+<img src="https://github.com/d1pankarmedhi/picachain/assets/136924835/3a299c21-6590-4ee1-a3c1-73a92653f21e" height=150></img>
 <h3>⚡️ A Simple ready-to-use Image search engine library</h3>
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
