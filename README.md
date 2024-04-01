@@ -4,7 +4,7 @@
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
-[![PyPi license](https://badgen.net/pypi/license/pip/)](https://pypi.org/project/pip/) [![PyPI version fury.io](https://badge.fury.io/py/picachain.svg)](https://pypi.python.org/pypi/picachain/)
+[![PyPi license](https://badgen.net/pypi/license/pip/)]() [![PyPI version fury.io](https://badge.fury.io/py/picachain.svg)](https://pypi.python.org/pypi/picachain/)
 
 </div>
 
@@ -45,7 +45,8 @@ image_search = ImageSearch(retriever=retriever, embedding=embedding, query_img=i
 result = image_search.search_relevant_images(top_k=3) # get top 3 relevant images
 
 for img, score in result: # [(img, score), (img, score)]
-    img.show()
+    plt.imshow(img)
+    plt.show()
 
 ```
 

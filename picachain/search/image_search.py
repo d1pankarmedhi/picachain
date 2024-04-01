@@ -1,6 +1,6 @@
 from PIL import Image
 
-from picachain.embedding import ClipEmbedding, Embedding
+from picachain.embedding import Embedding
 from picachain.retriever import ImageRetriever
 
 
@@ -21,7 +21,6 @@ class ImageSearch:
         top_k: int = 3,
     ):
         return self.retriever.get_relevant_images(
-            collection=self.retriever.datastore_collection,
             query_embedding=self._embed_query_img(),
             top_k=top_k,
         )

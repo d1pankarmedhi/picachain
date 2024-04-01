@@ -37,9 +37,6 @@ class ChromaStore:
 
         self.client = chromadb.PersistentClient()
 
-    def _embedding_ids(self):
-        str(uuid.uuid4())
-
     def _health_check(self) -> bool:
         return isinstance(self.client.heartbeat(), int)
 
@@ -48,20 +45,20 @@ class ChromaStore:
     ) -> np.ndarray:
         return embedding.encode_images(images)
 
-    def create_collection(self):
+    def create(self):
         collection = self.client.get_or_create_collection(
             name=self.collection_name,
         )
         return collection
 
-    def add_to_collection(
+    def add(
         self,
         collection: Collection,
         embeddings: List[float],
         documents: List[str],
         ids: List[str],
     ):
-        """Add embeddings, documents to collection.
+        """Add embeddings, documents to index or collection.
 
         Args:
         - collection: created collection.
@@ -77,7 +74,7 @@ class ChromaStore:
         except Exception as e:
             raise Exception(f"Failed to add documents to Chroma store. {e}")
 
-    def query_documents(
+    def query(
         self,
         collection: Collection,
         query_embedding: List[float],
@@ -97,8 +94,15 @@ class ChromaStore:
         relevant_images = [
             base64_to_image(img_str) for img_str in result["documents"][0]
         ]
-        scores = [score for score in result["distances"][0]]
+        scores = [round(score, 3) for score in result["distances"][0]]
         return list(zip(relevant_images, scores))
+
+    def delete(self, collection_name: str):
+        try:
+            self.client.delete_collection(collection_name)
+            return True
+        except Exception as e:
+            raise Exception("Failed to delete collection", e)
 
     @staticmethod
     def collection_info(collection: Collection):
