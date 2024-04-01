@@ -1,0 +1,22 @@
+[tool.poetry]
+authors = ["d1pankarmedhi <dipankarmedhi11@gmail.com>"]
+description = "Simple image search engine package."
+license = "MIT"
+name = "picachain"
+packages = [{include = "picachain"}]
+readme = "README.md"
+version = "0.1.2"
+
+[tool.poetry.dependencies]
+chromadb = "^0.4.24"
+matplotlib = "^3.8.3"
+pillow = "^10.2.0"
+pinecone-client = "^3.2.1"
+pysqlite3-binary = "^0.5.2.post3"
+python = "^3.10"
+torch = "^2.2.2"
+transformers = "^4.39.1"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
