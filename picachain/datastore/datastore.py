@@ -8,22 +8,25 @@ from picachain.embedding import Embedding
 
 
 class DataStore(ABC):
-    pass
+    """Interface for datastores and vector databases."""
 
-    @abstractmethod
     def generate_embeddings(
         self, images: List[Image], embedding: Embedding
     ) -> np.ndarray:
-        """Generate embeddings to be stored on the datastore."""
+        return embedding.encode_images(images)
 
     @abstractmethod
-    def create_collection(self):
+    def create(self):
         """Create a collection for documents and embedding"""
 
     @abstractmethod
-    def add_to_collection(self, *args, **kwargs):
+    def add(self, *args, **kwargs):
         """Add embeddings and metadata to collection."""
 
     @abstractmethod
-    def query_documents(self, *args, **kwargs) -> list:
+    def query(self, *args, **kwargs) -> list:
         """Query similar images"""
+
+    @abstractmethod
+    def delete(self, *args, **kwargs):
+        """Delete the collection or index"""

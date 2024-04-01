@@ -11,22 +11,23 @@ keywords = [
   "packages",
   "poetry",
   "python-packages",
+  "pinecone",
 ]
 license = "MIT"
 name = "picachain"
 packages = [{include = "picachain"}]
 readme = "README.md"
 repository = "https://github.com/d1pankarmedhi/picachain"
-version = "0.1.20"
+version = "0.1.30"
 
 [tool.poetry.dependencies]
 chromadb = "^0.4.24"
 matplotlib = "^3.8.3"
-pillow = "^10.2.0"
+pillow = "10.1.0"
 pinecone-client = "^3.2.1"
 pysqlite3-binary = "^0.5.2.post3"
 python = "^3.10"
-torch = "^2.2.2"
+torch = "2.2.1"
 transformers = "^4.39.1"
 
 [build-system]

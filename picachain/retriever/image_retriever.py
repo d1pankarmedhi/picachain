@@ -1,20 +1,20 @@
 import uuid
 from collections import defaultdict
-from typing import List
+from typing import List, Union
 
 from PIL.Image import Image
 
-from picachain.datastore import ChromaStore, DataStore, PineconeStore
+from picachain.datastore import ChromaStore, PineconeStore
 from picachain.embedding import ClipEmbedding, Embedding
-from picachain.utils.image_util import base64_to_image, image_to_base64
+from picachain.utils.image_util import image_to_base64
 
 
 class ImageRetriever:
-    datastore_collection = None
+    datastore_collection_index = None  # index or collection based on the database
 
     def __init__(
         self,
-        datastore: ChromaStore,
+        datastore: Union[ChromaStore, PineconeStore],
         embedding: Embedding,
         images: List[Image],
     ) -> None:
@@ -48,34 +48,47 @@ class ImageRetriever:
         """Push embeddings and documents to datastore."""
         try:
             embeddings = self.datastore.generate_embeddings(self.images, self.embedding)
-            self.datastore_collection = self.datastore.create_collection()
+            self.datastore_collection_index = self.datastore.create()
             documents = self._process_images_for_storage()
             ids = self._create_ids_for_images(documents)
-            self.datastore.add_to_collection(
-                collection=self.datastore_collection,
-                embeddings=embeddings,
-                documents=documents,
-                ids=ids,
-            )
+
+            if isinstance(self.datastore, ChromaStore):
+                self.datastore.add(
+                    collection=self.datastore_collection_index,
+                    embeddings=embeddings,
+                    documents=documents,
+                    ids=ids,
+                )
+            elif isinstance(self.datastore, PineconeStore):
+                self.datastore.add(
+                    index=self.datastore_collection_index,
+                    embeddings=embeddings,
+                    documents=documents,
+                    ids=ids,
+                )
         except Exception as e:
             raise Exception("Failed to push embeddings", e)
 
-    def get_relevant_images(
-        self, collection, query_embedding: list, top_k: int
-    ) -> list:
+    def get_relevant_images(self, query_embedding: list, top_k: int) -> list:
         """Retrieve top k relevant images from datastore.
 
         Args:
-        - collection: database collection.
         - query_embedding: query image embedding.
         - top_k (int): top k relevant images to retrieve.
 
         Returns:
         - list of relevant images.
         """
-        relevant_images = self.datastore.query_documents(
-            collection=collection,
-            query_embedding=query_embedding,
-            top_k=top_k,
-        )
+        if isinstance(self.datastore, ChromaStore):
+            relevant_images = self.datastore.query(
+                collection=self.datastore_collection_index,
+                query_embedding=query_embedding,
+                top_k=top_k,
+            )
+        elif isinstance(self.datastore, PineconeStore):
+            relevant_images = self.datastore.query(
+                index=self.datastore_collection_index,
+                query_embedding=query_embedding,
+                top_k=top_k,
+            )
         return relevant_images
