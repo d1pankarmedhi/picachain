@@ -6,18 +6,21 @@
 
 [![PyPi license](https://badgen.net/pypi/license/pip/)]() [![PyPI version fury.io](https://badge.fury.io/py/picachain.svg)](https://pypi.python.org/pypi/picachain/)
 
+
+
 </div>
 
 ## 📌 Install Picachain
-Create a local datastore with **ChromaDB** for image search.
 
-With `pip` :
 ```bash
 pip install picachain
 ```
 
+## 🥇 Demo
+Check out **Picachain** and **ChromaDB** demo [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1FbruIGMBrD7VW5jCHStHzGlsEuigbS0q?usp=sharing)
+
 ## 🚀 Getting Started
-With less than 10 lines of code, create an image search engine with the help of **picachain** and **chromadb**.
+Create your own image search pipeline with just a few lines of code.
 
 ```python
 from PIL import Image
@@ -51,6 +54,7 @@ for img, score in result: # [(img, score), (img, score)]
 ```
 
 It is under continuous development so currently supports only [ChromaDB](https://docs.trychroma.com/). We are working on integrating all popular vector databases such as [Pinecone](https://www.pinecone.io/), [Weaviate](https://weaviate.io/), etc. 
+
 
 
 
