@@ -51,21 +51,12 @@ class ImageRetriever:
             self.datastore_collection_index = self.datastore.create()
             documents = self._process_images_for_storage()
             ids = self._create_ids_for_images(documents)
-
-            if isinstance(self.datastore, ChromaStore):
-                self.datastore.add(
-                    collection=self.datastore_collection_index,
-                    embeddings=embeddings,
-                    documents=documents,
-                    ids=ids,
-                )
-            elif isinstance(self.datastore, PineconeStore):
-                self.datastore.add(
-                    index=self.datastore_collection_index,
-                    embeddings=embeddings,
-                    documents=documents,
-                    ids=ids,
-                )
+            self.datastore.add(
+                self.datastore_collection_index,
+                embeddings,
+                documents,
+                ids,
+            )
         except Exception as e:
             raise Exception("Failed to push embeddings", e)
 
@@ -79,16 +70,9 @@ class ImageRetriever:
         Returns:
         - list of relevant images.
         """
-        if isinstance(self.datastore, ChromaStore):
-            relevant_images = self.datastore.query(
-                collection=self.datastore_collection_index,
-                query_embedding=query_embedding,
-                top_k=top_k,
-            )
-        elif isinstance(self.datastore, PineconeStore):
-            relevant_images = self.datastore.query(
-                index=self.datastore_collection_index,
-                query_embedding=query_embedding,
-                top_k=top_k,
-            )
+        relevant_images = self.datastore.query(
+            self.datastore_collection_index,
+            query_embedding,
+            top_k,
+        )
         return relevant_images
