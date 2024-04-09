@@ -44,7 +44,7 @@ class LLava:
     def config(cls, padding=True):
         pass
 
-    def query(self, prompts: List[str], images: List[Union[str, Image.Image]]):
+    def query(self, prompts: List[str], images: Union[List[str], List[Image.Image]]):
         if isinstance(images, List[str]):
             inference_images = [Image.open(img) for img in images]
         else:
@@ -57,8 +57,8 @@ class LLava:
         output = self.model.generate(**inputs, max_new_tokens=20)
         generated_text = self.processor.batch_decode(output, skip_special_tokens=True)
 
-        output = defaultdict(str)
+        result = defaultdict(str)
         for idx, text in enumerate(generated_text):
-            output[prompts[idx]] = text.split("ASSISTANT:")[-1]
+            result[prompts[idx]] = text.split("ASSISTANT:")[-1]
 
-        return output
+        return result
