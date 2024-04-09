@@ -5,10 +5,10 @@ from PIL import Image
 from picachain.extraction.extraction import Extraction
 
 
-class Donut(Extraction):
-    def __init__(self) -> None:
-        super().__init__()
+class DonutDocVQA:
+    model_id = "naver-clova-ix/donut-base-finetuned-docvqa"
 
+    def __init__(self) -> None:
         try:
             import re
 
@@ -20,16 +20,14 @@ class Donut(Extraction):
             )
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
-        self.processor = DonutProcessor.from_pretrained(
-            "naver-clova-ix/donut-base-finetuned-docvqa"
+        self.processor = DonutProcessor.from_pretrained(self.model_id)
+        self.model = VisionEncoderDecoderModel.from_pretrained(self.model_id).to(
+            self.device
         )
-        self.model = VisionEncoderDecoderModel.from_pretrained(
-            "naver-clova-ix/donut-base-finetuned-docvqa"
-        ).to(self.device)
 
-    def extract(
+    def extract_question_answer(
         self, image: Union[str, Image.Image], queries: List[str], *args, **kwargs
-    ):
+    ) -> List[dict[str, str]]:
         """Extract information and answer the questions from the image.
 
         Args:
