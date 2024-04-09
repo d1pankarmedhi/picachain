@@ -20,7 +20,9 @@ class LLava:
             )
 
         self.quantization_config = BitsAndBytesConfig(
-            load_in_4bit=True, bnb_4bit_compute_dtype=torch.float16
+            load_in_4bit=True,
+            bnb_4bit_compute_dtype=torch.float16,
+            llm_int8_has_fp16_weight=True,
         )
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model_id = "llava-hf/llava-1.5-7b-hf"
