@@ -4,8 +4,8 @@ from typing import List, Union
 from PIL import Image
 
 
-class DonutDocClassification:
-    model_id = "naver-clova-ix/donut-base-finetuned-rvlcdip"
+class DonutCORD:
+    model_id = "naver-clova-ix/donut-base-finetuned-cord-v2"
 
     def __init__(self) -> None:
         try:
@@ -22,7 +22,9 @@ class DonutDocClassification:
             self.device
         )
 
-    def classify(self, image: Union[str, Image.Image], *args, **kwargs) -> dict:
+    def extract_information(
+        self, image: Union[str, Image.Image], *args, **kwargs
+    ) -> dict:
         """Extract information and answer the questions from the image.
 
         Args:
@@ -64,4 +66,8 @@ class DonutDocClassification:
             self.processor.tokenizer.pad_token, ""
         )
         sequence = re.sub(r"<.*?>", "", sequence, count=1).strip()
-        return self.processor.token2json(sequence)
+        result = self.processor.token2json(sequence)
+        if result:
+            return result
+        else:
+            return {}

@@ -1,6 +1,6 @@
 <div align="center">
 <img src="https://github.com/d1pankarmedhi/picachain/assets/136924835/3a299c21-6590-4ee1-a3c1-73a92653f21e" height=150></img>
-<h3>⚡️ A Simple ready-to-use Image search engine library</h3>
+<h3>⚡️ Build quick ML pipelines for images</h3>
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
@@ -16,11 +16,9 @@
 pip install picachain
 ```
 
-## 🥇 Demo
-Check out **Picachain** and **ChromaDB** demo [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1FbruIGMBrD7VW5jCHStHzGlsEuigbS0q?usp=sharing)
-
-## 🚀 Getting Started
-Create your own image search pipeline with just a few lines of code.
+## 🔍️ Build a quick image search engine
+Use **ChromaDB** or **Pinecone** for storage with **CLIP** embeddings.
+Check out a demo [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1FbruIGMBrD7VW5jCHStHzGlsEuigbS0q?usp=sharing)
 
 ```python
 from PIL import Image
@@ -34,8 +32,8 @@ from picachain.search import ImageSearch
 ```
 
 ```python
-img = Image.open("image-path") # query image
-images = [Image.open(os.path.join("images-path", image)) for image in os.listdir("images-path")] # image collection
+img = Image.open("image.png") # query image
+images = [...] # list of images
 ```
 
 ```python
@@ -43,8 +41,7 @@ images = [Image.open(os.path.join("images-path", image)) for image in os.listdir
 embedding = ClipEmbedding()
 datastore = ChromaStore("test-collection")
 retriever = ImageRetriever(datastore, embedding, images)
-
-image_search = ImageSearch(retriever=retriever, embedding=embedding, query_img=img)
+image_search = ImageSearch(retriever, embedding, img)
 result = image_search.search_relevant_images(top_k=3) # get top 3 relevant images
 
 for img, score in result: # [(img, score), (img, score)]
@@ -52,11 +49,3 @@ for img, score in result: # [(img, score), (img, score)]
     plt.show()
 
 ```
-
-It is under continuous development so currently supports only [ChromaDB](https://docs.trychroma.com/). We are working on integrating all popular vector databases such as [Pinecone](https://www.pinecone.io/), [Weaviate](https://weaviate.io/), etc. 
-
-
-
-
-
-
