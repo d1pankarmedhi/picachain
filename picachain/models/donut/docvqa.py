@@ -2,8 +2,6 @@ from typing import List, Union
 
 from PIL import Image
 
-from picachain.extraction.extraction import Extraction
-
 
 class DonutDocVQA:
     model_id = "naver-clova-ix/donut-base-finetuned-docvqa"

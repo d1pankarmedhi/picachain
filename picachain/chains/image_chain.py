@@ -1,10 +1,11 @@
 from PIL import Image
 
+from picachain.chains.chain import Chain
 from picachain.embedding import Embedding
 from picachain.retriever import ImageRetriever
 
 
-class ImageSearch:
+class ImageChain(Chain):
     def __init__(
         self, retriever: ImageRetriever, query_img: Image, embedding: Embedding
     ) -> None:
@@ -16,7 +17,7 @@ class ImageSearch:
     def _embed_query_img(self):
         return self.embedding.encode_images([self.query_img]).tolist()
 
-    def search_relevant_images(
+    def relevant_images(
         self,
         top_k: int = 3,
     ):
