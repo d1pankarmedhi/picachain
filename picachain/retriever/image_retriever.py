@@ -60,7 +60,7 @@ class ImageRetriever:
         except Exception as e:
             raise Exception("Failed to push embeddings", e)
 
-    def get_relevant_images(self, query_embedding: list, top_k: int) -> list:
+    def relevant_images(self, query_embedding: list, top_k: int) -> list:
         """Retrieve top k relevant images from datastore.
 
         Args:
